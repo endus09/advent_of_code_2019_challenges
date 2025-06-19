@@ -8,7 +8,7 @@ int main(){
     uint64_t total_fuel = 0;
     uint32_t read_mass = 0;
 
-    while(fgets(string, 100, input)!= NULL){
+    while(fgets(string, 10, input)!= NULL){
         uint8_t i = 0;
         read_mass = 0;
         while(string[i] != 0){

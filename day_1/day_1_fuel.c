@@ -14,14 +14,13 @@ int main(){
         while(string[i] != 0){
             read_mass = read_mass*10;
             read_mass += (string[i] - 48);
-            uint8_t num = string[i] - '0';
+            // uint8_t num = string[i] - '0';
            // printf("%d ", num);             //testing
             i++;
         }
         read_mass /= 10;
         read_mass += 4;
         total_fuel += (read_mass/3) - 2;
-        int b = '9';
         //printf("\n");                     //testing
         //printf("%d\n", read_mass);        // testing
     }

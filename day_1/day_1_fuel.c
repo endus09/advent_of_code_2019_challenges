@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-uint64_t fuelforfuel(uint64_t fuel);
-
 int main(){
     FILE *input = fopen("mass_input.txt", "r");
 

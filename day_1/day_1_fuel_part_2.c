@@ -22,20 +22,25 @@ int main(){
         }
         read_mass /= 10;
         read_mass += 4;
-        total_fuel += (read_mass/3) - 2;
+        total_fuel += fuelforfuel((read_mass/3) - 2);
         int b = '9';
         //printf("\n");                     //testing
         //printf("%d\n", read_mass);        // testing
     }
-    total_fuel -= (read_mass/3) - 2;
+    total_fuel -= fuelforfuel((read_mass/3) - 2);
     read_mass -= 4;
     read_mass *= 10;
-    total_fuel += (read_mass/3) - 2;
+    total_fuel += fuelforfuel((read_mass/3) - 2);
     //printf("\n%d\n", read_mass);           // testing
-
-    printf("Fuel for Mass (not accounting for fuel mass): %ld\n", total_fuel); //answer part 1
-
+             
+    printf("Total Fuel: %ld\n", total_fuel);    //answer part 2
     fclose(input);
     return 0;
 
+}
+
+// method for finding the fuel required for the fuel!
+uint64_t fuelforfuel(uint64_t fuel){
+    if(fuel <= 8) return fuel;
+    else return fuel + fuelforfuel((fuel/3) - 2);
 }

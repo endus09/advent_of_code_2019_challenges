@@ -28,12 +28,12 @@ int main(){
         if(nums[j] == 1){
             nums[nums[j+3]] = nums[nums[j+1]] + nums[nums[j+2]];
             j += 4;
-            printf("%d \n", nums[0]);
+           // printf("%d \n", nums[0]);     // testing
         }
         else if(nums[j] == 2){
             nums[nums[j+3]] = nums[nums[j+1]] * nums[nums[j+2]];
             j += 4;
-            printf("%d \n", nums[0]);
+           // printf("%d \n", nums[0]);     // testing
         }
         else end = 0;
     }

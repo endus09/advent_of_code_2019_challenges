@@ -10,7 +10,7 @@ uint32_t grid_size = 30000;
 uint16_t **map_one = malloc(sizeof(uint16_t *) * grid_size);
 uint16_t **map_two = malloc(sizeof(uint16_t *) * grid_size);
 uint16_t x_y[2][2] = {{grid_size/2,grid_size/2},{grid_size/2,grid_size/2}};
-uint16_t starting[2][2] = {{grid_size/2,grid_size/2},{grid_size/2,grid_size/2}};
+uint16_t starting = grid_size/2;
 uint16_t debug = 1;
 uint16_t steps = 0;
 uint8_t map = 1;
@@ -131,7 +131,51 @@ fclose(input);
 
 // now finding closest intersection 
 
+int16_t distance = 1;
+int8_t loop = 1;
 
-
-
+while(loop != 0){
+    for(int i = 0; i < distance; i++)
+    {
+        printf("Map one: %d Map two: %d \n",map_one[starting + i][starting + distance - i], map_two[starting + i][starting + distance - i] );
+        if(map_one[starting + i][starting + distance - i] == 1 && map_two[starting + i][starting + distance - i] == 1)
+        {
+            printf("\nDISTANCE!!!!!!: %d\n", distance);
+            loop = 0;
+        } 
+    }
+    if(loop == 0) break;
+    for(int i = 0; i < distance; i++)
+    {
+        printf("Map one: %d Map two: %d \n",map_one[starting + distance - i][starting - i],map_two[starting + distance - i][starting - i] );
+        
+        if(map_one[starting + distance - i][starting - i] == 1 && map_two[starting + distance - i][starting - i] == 1) 
+        {
+            printf("\nDISTANCE!!!!!!: %d\n", distance);
+            loop = 0;
+        } 
+    }
+    if(loop == 0) break;
+    for(int i = 0; i < distance; i++)
+    {
+        printf("Map one: %d Map two: %d \n",map_one[starting - i][starting - distance + i],map_two[starting - i][starting - distance + i]  );
+        if(map_one[starting - i][starting - distance + i] == 1 && map_two[starting - i][starting - distance + i] == 1)
+        {
+            printf("\nDISTANCE!!!!!!: %d\n", distance);
+            loop = 0;
+        } 
+    }
+    if(loop == 0) break;
+    for(int i = 0; i < distance; i++)
+    {
+        printf("Map one: %d Map two: %d \n", map_one[starting - distance + i][starting + i],  map_two[starting - distance + i][starting + i]);
+        if(map_one[starting - distance + i][starting + i] == 1 && map_two[starting - distance + i][starting + i] == 1)
+        {   
+            printf("\nDISTANCE!!!!!!: %d\n", distance);
+            loop = 0;
+        } 
+    }
+    if(loop != 0) distance++;
+}
+printf("\nDistance: %d\n", distance);
 }

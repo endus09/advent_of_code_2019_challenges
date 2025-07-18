@@ -14,9 +14,9 @@ FILE *input = fopen("wire_reading.txt", "r");
 
 uint32_t edge_length = 30000;
 uint32_t grid_size = edge_length * edge_length;
-uint16_t *map_one = malloc(sizeof(uint16_t) * grid_size);
-uint16_t *map_two = malloc(sizeof(uint16_t) * grid_size);
-uint16_t starting = edge_length/2;
+uint32_t *map_one = malloc(sizeof(uint16_t) * grid_size);
+uint32_t *map_two = malloc(sizeof(uint16_t) * grid_size);
+uint32_t starting = edge_length/2;
 Vec2 pos_one = 
 {
     .x = starting, 
@@ -32,17 +32,22 @@ uint16_t debug = 1;
 uint16_t steps = 0;
 uint8_t map = 1;
 char read, direction;
-memset(map_one,0,sizeof(uint16_t) * grid_size);
-memset(map_two,0,sizeof(uint16_t) * grid_size);
-
+memset(map_one,0,sizeof(uint32_t) * grid_size);
+memset(map_two,0,sizeof(uint32_t) * grid_size);
+uint8_t check = 0;
 // printf("GOOD\n");                       // testing
 while((read = fgetc(input)) != EOF)
 {
     if(read == 'U' || read == 'D' || read == 'R' || read == 'L'){direction = read;}
     else if(read == ',' || read == '\n')
     {
-        printf("Steps: %c%d\n", direction,steps);
         if(read == '\n') {map++;}
+
+        printf("Steps: %c%d\n", direction,steps);
+        if(map == 2 && check == 0){
+            printf("SECOND LINE\n");
+            check++;
+        }
     //    printf("STEPS: %d\n", steps);       // testing
         switch(map)
         {
@@ -139,7 +144,7 @@ while((read = fgetc(input)) != EOF)
     }
 }
 
-
+printf("Steps: %c%d\n", direction,steps);
 if(direction == 'U')
             {
                 for(int i = 1; i <= steps; i++)
@@ -183,16 +188,17 @@ printf("Read and mapped");
 // done reading and mapping
 
 // now finding closest intersection 
-
+uint32_t index
 int16_t distance = 0;
 int8_t loop = 1;
 
 while(loop != 0)
 {
+    distance++;
     for(int i = 0; i < distance; i++)
     {
-        size_t index = ((pos_one.y + distance - i)) + (pos_one.x + i);
-        if(map_one[index] == map_two[index])
+        index = ((starting + distance - i) * edge_length) + (starting + i);
+        if(map_one[index] == 1 && map_two[index] == 1)
         {
             loop = 0;
         }
@@ -200,8 +206,8 @@ while(loop != 0)
 
     for(int i = 0; i < distance; i++)
     {
-        size_t index = ((pos_one.y + i)) + (pos_one.x + distance - i);
-        if(map_one[index] == map_two[index])
+        index = ((starting + i) * edge_length) + (starting + distance - i);
+        if(map_one[index] == 1 && map_two[index] == 1)
         {
             loop = 0;
         }        
@@ -209,8 +215,8 @@ while(loop != 0)
 
     for(int i = 0; i < distance; i++)
     {
-        size_t index = ((pos_one.y - distance + i)) + (pos_one.x - i);
-        if(map_one[index] == map_two[index])
+        index = ((starting - distance + i) * edge_length) + (starting - i);
+        if(map_one[index] == 1 && map_two[index] == 1)
         {
             loop = 0;
         }        
@@ -218,13 +224,13 @@ while(loop != 0)
 
     for(int i = 0; i < distance; i++)
     {
-        size_t index = ((pos_one.y - i)) + (pos_one.x - distance + i);
-        if(map_one[index] == map_two[index])
+        index = ((starting - i) * edge_length) + (starting - distance + i);
+        if(map_one[index] == 1 && map_two[index] == 1)
         {
             loop = 0;
         }        
     }
-    distance++;
+
 }
 
 free(map_one);
